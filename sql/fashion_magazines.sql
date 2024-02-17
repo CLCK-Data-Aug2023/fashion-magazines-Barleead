@@ -1,10 +1,10 @@
-SELECT customers.customer_name AS 'Customer',
-    PRINTF("$%.2f", SUM(subscriptions.price_per_month * subscriptions.subscription_length)) AS 'Amount Due'
-FROM orders
-JOIN customers
-    ON orders.customer_id = customers.customer_id
-JOIN subscriptions
-    ON orders.subscription_ID = subscriptions.subscription_id
-WHERE Orders.order_status = "unpaid"
-    AND subscriptions.description = 'Fashion Magazine'
-    ORDER BY Customer;
+SELECT c.customer_name AS Customer,
+    printf("$%.2f", SUM(s.price_per_month * s.subscription_length)) AS "Amount Due"
+FROM customers c
+JOIN orders o 
+    ON c.customer_id = o.customer_id
+JOIN subscriptions s 
+    ON o.subscription_id = s.subscription_id
+WHERE o.order_status = 'unpaid'
+    AND s.description = 'Fashion Magazine'
+GROUP BY c.customer_name;
